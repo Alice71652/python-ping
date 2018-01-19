@@ -205,9 +205,11 @@ def verbose_ping(dest_addr, timeout = 2, count = 4):
         try:
             delay  =  do_one(dest_addr, timeout)
         except socket.gaierror, e:
-            print "failed. (socket error: '%s')" % e[1]
+            print "failed. (socket error: '%s')" % e
             break
-
+        except OSError as e:
+            print "failed. '%s'" % e
+            break
         if delay  ==  None:
             print "failed. (timeout within %ssec.)" % timeout
         else:
